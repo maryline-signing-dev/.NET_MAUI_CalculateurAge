@@ -8,6 +8,7 @@ namespace CalculateurAge.Views;
 [QueryProperty(nameof(AgeDetaille), "ageDetaille")]
 [QueryProperty(nameof(JourNaissance), "jourNaissance")]
 [QueryProperty(nameof(ProchainAnniv), "prochainAnniv")]
+[QueryProperty(nameof(Categorie), "categorie")]
 [QueryProperty(nameof(ErreurDate), "erreur")]
 public partial class ResultatPage : ContentPage
 {
@@ -17,6 +18,7 @@ public partial class ResultatPage : ContentPage
     public string? AgeDetaille { get; set; }
     public string? JourNaissance { get; set; }
     public string? ProchainAnniv { get; set; }
+    public string? Categorie {  get; set; }
     public string? ErreurDate { get; set; }
 
     public ResultatPage() => InitializeComponent();
@@ -30,6 +32,7 @@ public partial class ResultatPage : ContentPage
         lblJourNaissance.Text = JourNaissance;
         lblProchainAnniv.Text = ProchainAnniv;
         lblMessageMajorite.Text = $"Vous êtes {Majorite}";
+        lblCategorie.Text = $"Vous etes de la catégorie {Categorie}";
  
     }
 

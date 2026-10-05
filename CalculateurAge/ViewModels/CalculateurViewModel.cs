@@ -19,6 +19,7 @@ public partial class CalculateurViewModel : BaseViewModel
     private string _ageDetaille = "";
     private string _jourNaissance = "";
     private string _prochainAnniversaire = "";
+    private string _categorie = "";
 
     //proprietes publiques: ce que le XML voit
     public string Nom
@@ -91,6 +92,13 @@ public partial class CalculateurViewModel : BaseViewModel
         get => _prochainAnniversaire;
         set => SetField(ref _prochainAnniversaire, value);
     }
+
+    public string Categorie
+    {
+        get => _categorie;
+        set => SetField(ref _categorie, value);
+    }
+
     public bool ErreurVisible => !string.IsNullOrEmpty(ErreurDate);
 
     // Liee a Button.Command dans le XAML
@@ -109,7 +117,7 @@ public partial class CalculateurViewModel : BaseViewModel
     }
 
     // Demande à la vue de naviguer — le ViewModel ne navigue pas lui-même
-    public event Action<string, string, string, string, string, string, string>? NavigationDemandee;
+    public event Action<string, string, string, string, string, string,string, string>? NavigationDemandee;
 
     // La logique metier: aucun controle d interface ici
     private void Calculer()
@@ -162,6 +170,16 @@ public partial class CalculateurViewModel : BaseViewModel
         ResultatVisible = true;
         Majorite = majorite;
         ErreurDate = "";
+        // ── Catégorie d'âge
+        Categorie = annees switch
+        {
+            <= 2 => "Bébé",
+            <= 12 => "Enfant",
+            <= 17 => "Adolescent(e)",
+            <= 35 => "Jeune adulte",
+            <= 59 => "Adulte",
+            _ => "Senior"
+        };
 
         NavigationDemandee?.Invoke(
             (Nom),
@@ -170,6 +188,7 @@ public partial class CalculateurViewModel : BaseViewModel
             (AgeDetaille),
             (JourNaissance),
             (ProchainAnniversaire),
+            (Categorie),  
             "");
     }
 

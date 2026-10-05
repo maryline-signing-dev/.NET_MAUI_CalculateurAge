@@ -3,34 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CalculateurAge.Views.ResultatPage"
              Shell.NavBarIsVisible="True"
-             Title="ResultatPage">
-    <VerticalStackLayout
-        Padding="20"
-        Spacing ="16">
+             Title="RésultatPage">
 
-        <Label 
-            x:Name="lblMessage"
-            FontSize="22"/>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
 
-        <Label 
-            x:Name="lblAgeDetaille"     
-            FontSize="20"/>
+            <!-- Nom + âge simple -->
+            <Label x:Name="lblMessage"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,16,0,0"/>
 
-        <Label 
-            x:Name="lblJourNaissance"   
-            FontSize="20"/>
+            <!-- Âge détaillé -->
+            <Label x:Name="lblAgeDetaille"
+                   FontSize="18"
+                   HorizontalTextAlignment="Center"/>
 
-        <Label 
-            x:Name="lblProchainAnniv"   
-            FontSize="20"/>
+            <BoxView HeightRequest="1"
+                     Color="#DADAE8"
+                     Margin="20,8"/>
 
-        <Label 
-            x:Name="lblMessageMajorite"
-            FontSize="22"/>
+            <!-- Jour de naissance -->
+            <Label x:Name="lblJourNaissance"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center"/>
 
-        <Button
-            Text="Retour"
-            Clicked="OnRetourClicked"/>
+            <!-- Prochain anniversaire -->
+            <Label x:Name="lblProchainAnniv"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center"
+                   LineBreakMode="WordWrap"/>
 
-    </VerticalStackLayout>
+            <BoxView HeightRequest="1"
+                     Color="#DADAE8"
+                     Margin="20,8"/>
+
+            <!-- Statut majeur/mineur -->
+            <Label x:Name="lblMessageMajorite"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"/>
+
+            <!-- Catégorie -->
+            <Label x:Name="lblCategorie"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center"/>
+
+            <BoxView HeightRequest="1" Color="#DADAE8"/>
+
+            <!-- Bouton retour -->
+            <Button Text="Retour"
+                    FontSize="18"
+                    Clicked="OnRetourClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

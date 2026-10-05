@@ -34,6 +34,7 @@
             <!--Dans C4 on remplace x:Name="btnCalculer" et Clicked="OnCalculerClicked" par Command="{Binding CalculerCommand}" -->
             <Button
                 Text="Calculer" 
+                FontSize="18"
                 Command="{Binding CalculerCommand}"/>
 
 
