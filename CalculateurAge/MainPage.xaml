@@ -31,12 +31,21 @@
                 Command="{Binding CalculerCommand}"/>
 
 
-            <!--Dans C4 on remplace x:Name="lblResultat" et IsVisible="False" par Text="{Binding Resultat}" et IsVisible="{Binding ResultatVisible}" -->
+            <!--On supprime les deux labels ci dessous pour que le resultat s affiche uniquement sur ResultatPage-->
+            <!--Dans C4 on remplace x:Name="lblResultat" et IsVisible="False" par Text="{Binding Resultat}" et IsVisible="{Binding ResultatVisible}"-->
+            <!--
             <Label
                 Text="{Binding Resultat}"
                 FontSize="20"
                 IsVisible="{Binding ResultatVisible}"/>
-            
+            -->
+
+            <!--Ajout de la fonctionnalite Majorite-->
+            <!-- <Label Text="{Binding Majorite}"
+               FontSize="18"
+               IsVisible="{Binding ResultatVisible}" />
+            -->
+
         </VerticalStackLayout>
     </ScrollView>
 

@@ -15,7 +15,15 @@ namespace CalculateurAge
             // Apparait dès l etape C4
 
             //objet dans lequel tous les {Binding} de la page vont chercher leurs valeurs
-            BindingContext = new CalculateurViewModel();
+            var vm = new CalculateurViewModel();
+            BindingContext = vm;
+
+            // La vue écoute le ViewModel et fait la navigation
+            vm.NavigationDemandee += async (nom, age, majorite) =>
+            {
+                await Shell.Current.GoToAsync(
+                    $"{nameof(ResultatPage)}?nom={nom}&age={age}&majorite={majorite}");
+            };
         }
 
         /*

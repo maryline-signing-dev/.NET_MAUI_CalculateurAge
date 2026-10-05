@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace CalculateurAge.ViewModels;
 
 //Contient l ETAT de l ecran et les ACTIONS possibles
-public class CalculateurViewModel : BaseViewModel
+public partial class CalculateurViewModel : BaseViewModel
 {
     //champs prives : la vraie donnee
     private string _nom = "";
     private DateTime _dateNaissance = DateTime.Today.AddYears(-20);
     private string _resultat = "";
+    private string _majorite = "";
     private bool _resultatVisible;
 
     //proprietes publiques: ce que le XML voit
@@ -42,6 +43,12 @@ public class CalculateurViewModel : BaseViewModel
         set => SetField(ref _resultatVisible, value);
     }
 
+    public string Majorite
+    {
+        get => _majorite;
+        set => SetField(ref _majorite, value);
+    }
+
     // Liee a Button.Command dans le XAML
     public RelayCommand CalculerCommand
     {
@@ -55,6 +62,9 @@ public class CalculateurViewModel : BaseViewModel
             () => !string.IsNullOrWhiteSpace(Nom));
     }
 
+    // Demande à la vue de naviguer — le ViewModel ne navigue pas lui-même
+    public event Action<string, string, string>? NavigationDemandee;
+
     // La logique metier: aucun controle d interface ici
     private void Calculer()
     {
@@ -62,9 +72,19 @@ public class CalculateurViewModel : BaseViewModel
         if (DateNaissance.Date > DateTime.Today.AddYears(-age))
             age--;
 
+        //Ajout de la fonctionnalité Majorite
+        string majorite = age >= 21 ? "Majeur " : "Mineur ";
+
         Resultat = $"{Nom}, vous avez {age} ans";
         ResultatVisible = true;
+        Majorite = $"Vous etes {majorite}";
+
+        // Demande à la vue de naviguer (le ViewModel ne navigue pas lui-même)
+        NavigationDemandee?.Invoke(Nom, age.ToString(), majorite);
+
     }
+
+
 }
 
 
