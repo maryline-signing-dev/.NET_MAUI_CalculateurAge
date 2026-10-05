@@ -25,6 +25,12 @@
             <DatePicker
                 Date="{Binding DateNaissance }"/>
 
+            <!-- Message d'erreur date future (visible seulement si erreur) -->
+            <Label Text="{Binding ErreurDate}"
+                   TextColor="Red"
+                   FontSize="14"
+                   IsVisible="{Binding ErreurVisible}"/>
+            
             <!--Dans C4 on remplace x:Name="btnCalculer" et Clicked="OnCalculerClicked" par Command="{Binding CalculerCommand}" -->
             <Button
                 Text="Calculer" 

@@ -13,6 +13,12 @@
             FontSize="22"/>
 
         <Label 
+            x:Name="erreurMessage"
+            FontSize="22"
+            TextColor="Red"/>
+
+
+        <Label 
             x:Name="lblMessageMajorite"
             FontSize="22"/>
 

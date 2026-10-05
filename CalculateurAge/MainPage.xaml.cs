@@ -19,10 +19,13 @@ namespace CalculateurAge
             BindingContext = vm;
 
             // La vue écoute le ViewModel et fait la navigation
-            vm.NavigationDemandee += async (nom, age, majorite) =>
+            vm.NavigationDemandee += async (nom, age, majorite, erreur) =>
             {
                 await Shell.Current.GoToAsync(
-                    $"{nameof(ResultatPage)}?nom={nom}&age={age}&majorite={majorite}");
+                    $"{nameof(ResultatPage)}?nom={nom}" +
+                    $"&age={age}" +
+                    $"&majorite={majorite}" +
+                    $"&erreur={erreur}");
             };
         }
 
