@@ -1,17 +1,26 @@
 ﻿using CalculateurAge.Views;
 using System.Threading.Tasks;
+using CalculateurAge.ViewModels;
 
 namespace CalculateurAge
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        //int count = 0;  supprimé dès l etape c4
 
         public MainPage()
         {
             InitializeComponent();
+
+            // Apparait dès l etape C4
+
+            //objet dans lequel tous les {Binding} de la page vont chercher leurs valeurs
+            BindingContext = new CalculateurViewModel();
         }
 
+        /*
+         * Tout le code ci dessous est supprime des l etape C4
+         * 
         // Gestionnaire appele au clic du bouton Calculer
         // sender=le controle clique; e=donnees de l evenement
 
@@ -37,6 +46,8 @@ namespace CalculateurAge
             //en B5 les deux lignes ci-dessus sont remplacés
             await Shell.Current.GoToAsync($"{nameof(ResultatPage)}?nom={entryNom.Text}&age={age}");
 
-        }
+        }*/
+
+
     }
 }

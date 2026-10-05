@@ -6,32 +6,36 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="20,0"
+            Padding="20"
             Spacing="12">
 
             <Label
                 Text="Nom"
                 FontSize="16"/>
 
+            <!--Dans C4 on remplace le x:Name="entryNom" par Text="{Binding Nom, Mode=TwoWay}" -->
             <Entry
-                x:Name="entryNom"
+                Text="{Binding Nom, Mode=TwoWay}"
                 Placeholder="Votre nom"/>
             <Label
                 Text="Date de naissance"
                 FontSize="16"/>
 
+            <!--Dans C4 on remplace le x:Name="pickerDtae" par Date="{Binding DateNaissance}" -->
             <DatePicker
-                x:Name="pickerDate"/>
+                Date="{Binding DateNaissance }"/>
 
+            <!--Dans C4 on remplace x:Name="btnCalculer" et Clicked="OnCalculerClicked" par Command="{Binding CalculerCommand}" -->
             <Button
-                x:Name="btnCalculer"
                 Text="Calculer" 
-                Clicked="OnCalculerClicked" />
-                
+                Command="{Binding CalculerCommand}"/>
+
+
+            <!--Dans C4 on remplace x:Name="lblResultat" et IsVisible="False" par Text="{Binding Resultat}" et IsVisible="{Binding ResultatVisible}" -->
             <Label
-                x:Name="lblResultat"
+                Text="{Binding Resultat}"
                 FontSize="20"
-                IsVisible="False"/>
+                IsVisible="{Binding ResultatVisible}"/>
             
         </VerticalStackLayout>
     </ScrollView>
