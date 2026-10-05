@@ -16,6 +16,9 @@ public partial class CalculateurViewModel : BaseViewModel
     private string _majorite = "";
     private bool _resultatVisible;
     private string _erreurDate = "";
+    private string _ageDetaille = "";
+    private string _jourNaissance = "";
+    private string _prochainAnniversaire = "";
 
     //proprietes publiques: ce que le XML voit
     public string Nom
@@ -71,6 +74,23 @@ public partial class CalculateurViewModel : BaseViewModel
         }
     }
 
+    public string AgeDetaille
+    {
+        get => _ageDetaille;
+        set => SetField(ref _ageDetaille, value);
+    }
+
+    public string JourNaissance
+    {
+        get => _jourNaissance;
+        set => SetField(ref _jourNaissance, value);
+    }
+
+    public string ProchainAnniversaire
+    {
+        get => _prochainAnniversaire;
+        set => SetField(ref _prochainAnniversaire, value);
+    }
     public bool ErreurVisible => !string.IsNullOrEmpty(ErreurDate);
 
     // Liee a Button.Command dans le XAML
@@ -89,26 +109,67 @@ public partial class CalculateurViewModel : BaseViewModel
     }
 
     // Demande à la vue de naviguer — le ViewModel ne navigue pas lui-même
-    public event Action<string, string, string, string>? NavigationDemandee;
+    public event Action<string, string, string, string, string, string, string>? NavigationDemandee;
 
     // La logique metier: aucun controle d interface ici
     private void Calculer()
     {
+        DateTime naissance = DateNaissance.Date;
+        DateTime aujourd = DateTime.Today;
+
         // CanExecute garantit qu'on n'arrive jamais ici avec une date future
-        int age = DateTime.Today.Year - DateNaissance.Year;
-        if (DateNaissance.Date > DateTime.Today.AddYears(-age)) age--;
+        int annees = DateTime.Today.Year - DateNaissance.Year;
+        if (DateNaissance.Date > DateTime.Today.AddYears(-annees)) annees--;
 
-        string majorite = age >= 18 ? "Majeur(e)" : "Mineur(e)";
+        //age detaille : annee, mois, jour
+        int mois = aujourd.Month - naissance.Month;
+        int jours = aujourd.Day - naissance.Day;
 
-        Resultat = $"{Nom}, vous avez {age} ans";
+        if (jours < 0)
+        {
+            mois--;
+            // Nombre de jours du mois précédent
+            int moisPrecedent = aujourd.Month == 1 ? 12 : aujourd.Month - 1;
+            int anneePrecedente = aujourd.Month == 1 ? aujourd.Year - 1 : aujourd.Year;
+            jours += DateTime.DaysInMonth(anneePrecedente, moisPrecedent);
+        }
+        if (mois < 0)
+            annees--; mois += 12;
+
+        AgeDetaille = $" {annees} an{(annees > 1 ? "s" : "")}, " +
+              $"{mois} mois et " +
+              $"{jours} jour{(jours > 1 ? "s" : "")}";
+
+        //jour de naissance exacte
+        string[] joursFr = { "dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi" };
+        JourNaissance = $"Vous etes né(e) un {joursFr[(int)naissance.DayOfWeek]}";
+
+        // Prochain anniversaire
+        DateTime prochainAnniv = new DateTime(aujourd.Year, naissance.Month, naissance.Day);
+        if (prochainAnniv <= aujourd)
+            prochainAnniv = prochainAnniv.AddYears(1);
+
+        int joursRestants = (prochainAnniv - aujourd).Days;
+        string moisFr = new[] { "", "janvier", "février", "mars", "avril", "mai", "juin",
+                                "juillet", "août", "septembre", "octobre", "novembre", "décembre" }
+                            [prochainAnniv.Month];
+        ProchainAnniversaire = $"Votre prochain anniversaire est le {prochainAnniv.Day} {moisFr} {prochainAnniv.Year}\n" +
+                               $" Il reste donc {joursRestants} jour{(joursRestants > 1 ? "s" : "")}";
+
+        string majorite = annees >= 18 ? "Majeur(e)" : "Mineur(e)";
+
+        Resultat = $"{Nom}, vous avez {annees} ans";
         ResultatVisible = true;
         Majorite = majorite;
         ErreurDate = "";
 
         NavigationDemandee?.Invoke(
             (Nom),
-            (age.ToString()),
+            (annees.ToString()),
             (majorite),
+            (AgeDetaille),
+            (JourNaissance),
+            (ProchainAnniversaire),
             "");
     }
 

@@ -13,10 +13,16 @@
             FontSize="22"/>
 
         <Label 
-            x:Name="erreurMessage"
-            FontSize="22"
-            TextColor="Red"/>
+            x:Name="lblAgeDetaille"     
+            FontSize="20"/>
 
+        <Label 
+            x:Name="lblJourNaissance"   
+            FontSize="20"/>
+
+        <Label 
+            x:Name="lblProchainAnniv"   
+            FontSize="20"/>
 
         <Label 
             x:Name="lblMessageMajorite"
